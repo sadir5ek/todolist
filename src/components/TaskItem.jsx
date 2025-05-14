@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 
 function TaskItem({ task, deleteTask, updateTask, toggleStatus, theme }) {
-  if (!task) {
-    return null;
-  }
-
   const [isEditing, setIsEditing] = useState(false);
-  const [title, setTitle] = useState(task.title || '');
-  const [description, setDescription] = useState(task.description || '');
-  const [deadline, setDeadline] = useState(task.deadline || '');
+  const [editedTask, setEditedTask] = useState(task);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleUpdate = () => {
-    if (!title.trim()) {
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleSave = () => {
+    if (!editedTask.title.trim()) {
       alert('Введите название задачи!');
       return;
     }
-    updateTask({ ...task, title: title.trim(), description: description.trim(), deadline });
+    updateTask(editedTask);
     setIsEditing(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedTask((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -25,26 +29,27 @@ function TaskItem({ task, deleteTask, updateTask, toggleStatus, theme }) {
         <div className="edit-form">
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            name="title"
+            value={editedTask.title}
+            onChange={handleChange}
             className="form-input"
-            placeholder="Название задачи"
           />
           <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            name="description"
+            value={editedTask.description}
+            onChange={handleChange}
             className="form-textarea"
-            rows="4"
-            placeholder="Описание задачи"
+            rows="3"
           />
           <input
             type="date"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
+            name="deadline"
+            value={editedTask.deadline}
+            onChange={handleChange}
             className="form-input"
           />
           <div className="edit-buttons">
-            <button onClick={handleUpdate} className="edit-button save">
+            <button onClick={handleSave} className="edit-button save">
               Сохранить
             </button>
             <button onClick={() => setIsEditing(false)} className="edit-button cancel">
@@ -54,27 +59,36 @@ function TaskItem({ task, deleteTask, updateTask, toggleStatus, theme }) {
         </div>
       ) : (
         <div>
-          <h3 className="task-title">{task.title || 'Без названия'}</h3>
-          <p className="task-description">{task.description || 'Описание не указано'}</p>
-          <p className="task-deadline">Срок: {task.deadline || 'Не указан'}</p>
-          <div className="task-status">
-            <select
-              value={task.status || 'new'}
-              onChange={(e) => toggleStatus(task.id, e.target.value)}
-              className="status-select"
-            >
-              <option value="new">Новая</option>
-              <option value="in-progress">В процессе</option>
-              <option value="completed">Завершена</option>
-            </select>
+          <div className="task-item-header" onClick={handleToggle}>
+            <h3 className="task-title">{task.title}</h3>
+            <span className={`task-arrow ${isOpen ? 'open' : ''}`}>▼</span>
           </div>
-          <div className="task-buttons">
-            <button onClick={() => setIsEditing(true)} className="task-button edit">
-              Редактировать
-            </button>
-            <button onClick={() => deleteTask(task.id)} className="task-button delete">
-              Удалить
-            </button>
+          <div className={`task-details ${isOpen ? 'open' : ''}`}>
+            {task.description && (
+              <p className="task-description">{task.description}</p>
+            )}
+            {task.deadline && (
+              <p className="task-deadline">Срок: {task.deadline}</p>
+            )}
+            <div className="task-status">
+              <select
+                value={task.status}
+                onChange={(e) => toggleStatus(task.id, e.target.value)}
+                className="status-select"
+              >
+                <option value="new">Новые</option>
+                <option value="in-progress">В процессе</option>
+                <option value="completed">Завершённые</option>
+              </select>
+            </div>
+            <div className="task-buttons">
+              <button onClick={() => setIsEditing(true)} className="task-button edit">
+                Редактировать
+              </button>
+              <button onClick={() => deleteTask(task.id)} className="task-button delete">
+                Удалить
+              </button>
+            </div>
           </div>
         </div>
       )}

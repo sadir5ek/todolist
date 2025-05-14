@@ -7,6 +7,7 @@ function TaskForm({ addTask, theme }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('Form submitted, title:', title.trim());
     if (!title.trim()) {
       alert('Введите название задачи!');
       return;
@@ -45,7 +46,7 @@ function TaskForm({ addTask, theme }) {
         onChange={(e) => setDeadline(e.target.value)}
         className="form-input"
       />
-      <button type="submit" className="form-button">
+      <button type="submit" className="form-button" disabled={!title.trim()}>
         Добавить задачу
       </button>
     </form>

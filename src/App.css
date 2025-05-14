@@ -1,397 +1,692 @@
-/* Базалык стилдер */
-body {
-  margin: 0;
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  overflow-x: hidden;
-}
-
-/* Анимациялар */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Негизги контейнер */
+/* Общие стили */
 .app {
   min-height: 100vh;
-  transition: background-color 0.7s ease;
-}
-
-.app.light {
-  background: linear-gradient(to bottom, #f0f2f5, #e5e7eb);
+  padding: 25px 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #e0e7ff);
 }
 
 .app.dark {
-  background: linear-gradient(to bottom, #1f2937, #111827);
+  background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+  color: #ffffff; /* Все тексты в темной теме белые */
 }
 
-/* Контейнер */
+.app.light {
+  background: linear-gradient(135deg, #f5f7fa, #e0e7ff);
+  color: #000000; /* Все тексты в светлой теме черные */
+}
+
 .container {
-  max-width: 900px;
+  max-width: 850px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Хедер */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
+  flex-wrap: wrap; /* Для маленьких экранов */
+  gap: 10px;
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #1f2937;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #4c51bf;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
 }
 
 .app.dark .title {
-  color: #ffffff;
+  color: #a3bffa; /* Заголовок в темной теме остается акцентным */
 }
 
 .theme-toggle {
-  padding: 12px 20px;
-  border-radius: 50px;
-  border: none;
-  background: #ffffff;
-  color: #1f2937;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.app.light .theme-toggle {
+  color: #000000; /* Текст кнопки в светлой теме черный */
 }
 
 .app.dark .theme-toggle {
-  background: #4b5563;
-  color: #ffffff;
+  color: #ffffff; /* Текст кнопки в темной теме белый */
 }
 
 .theme-toggle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Фильтр */
-.filter {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
-.filter-label {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #4b5563;
-}
-
-.app.dark .filter-label {
-  color: #d1d5db;
-}
-
-.filter-select {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background: #ffffff;
-  color: #1f2937;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.app.dark .filter-select {
-  background: #374151;
-  border-color: #4b5563;
-  color: #ffffff;
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
-}
-
-/* Форма */
 .task-form {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  margin-bottom: 40px;
-  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
-.app.dark .task-form {
-  background: rgba(55, 65, 81, 0.95);
-}
-
-.form-input,
-.form-textarea {
-  width: 100%;
-  padding: 14px;
+.form-input, .form-textarea, .form-button {
+  padding: 12px 18px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background: #f9fafb;
-  color: #1f2937;
-  font-size: 1rem;
-  margin-bottom: 20px;
+  outline: none;
+  max-width: 100%;
+  width: calc(100% - 40px);
+  margin: 0 20px;
+  box-sizing: border-box;
   transition: all 0.3s ease;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.app.light .form-input,
+.app.light .form-textarea {
+  color: #000000; /* Текст в инпутах черный в светлой теме */
 }
 
 .app.dark .form-input,
 .app.dark .form-textarea {
-  background: #4b5563;
-  border-color: #6b7280;
-  color: #ffffff;
+  color: #ffffff; /* Текст в инпутах белый в темной теме */
 }
 
-.form-input:focus,
-.form-textarea:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+.form-input::placeholder, .form-textarea::placeholder {
+  color: #a0aec0;
+  opacity: 0.7;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: #63b3ed;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
 }
 
 .form-textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 100px;
 }
 
 .form-button {
-  width: 100%;
-  padding: 14px;
-  border-radius: 8px;
+  background: linear-gradient(90deg, #48bb78, #38a169);
+  color: white;
   border: none;
-  background: #2563eb;
-  color: #ffffff;
-  font-size: 1.1rem;
-  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-}
-
-.app.dark .form-button {
-  background: #3b82f6;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .form-button:hover {
-  background: #1d4ed8;
-  transform: scale(1.02);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+  background: linear-gradient(90deg, #38a169, #2f855a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
 }
 
-/* Тапшырма тизмеси */
+.form-button:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.app.dark .form-button {
+  background: linear-gradient(90deg, #48bb78, #38a169);
+}
+
+.app.dark .form-button:hover {
+  background: linear-gradient(90deg, #38a169, #2f855a);
+}
+
+.filter {
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap; /* Для маленьких экранов */
+}
+
+.filter-label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.app.light .filter-label {
+  color: #000000; /* Метка фильтра черная в светлой теме */
+}
+
+.app.dark .filter-label {
+  color: #ffffff; /* Метка фильтра белая в темной теме */
+}
+
+.filter-select {
+  padding: 8px 15px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.app.light .filter-select {
+  color: #000000; /* Текст в выпадающем списке черный в светлой теме */
+}
+
+.app.dark .filter-select {
+  color: #ffffff; /* Текст в выпадающем списке белый в темной теме */
+}
+
+.filter-select:hover, .filter-select:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #63b3ed;
+}
+
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 15px;
 }
 
-.no-tasks {
-  text-align: center;
-  font-size: 1.3rem;
-  color: #6b7280;
-  animation: pulse 2s infinite;
-}
-
-.app.dark .no-tasks {
-  color: #9ca3af;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-/* Тапшырма карточкасы */
 .task-item {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease-out;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
-}
-
-.app.dark .task-item {
-  background: rgba(55, 65, 81, 0.95);
+  overflow: hidden;
 }
 
 .task-item:hover {
-  transform: scale(1.02);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.task-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
 
 .task-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 12px;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.app.light .task-title {
+  color: #000000; /* Заголовок тапшырмы черный в светлой теме */
 }
 
 .app.dark .task-title {
-  color: #ffffff;
+  color: #ffffff; /* Заголовок тапшырмы белый в темной теме */
 }
 
-.task-description,
-.task-deadline {
+.task-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.app.light .task-arrow {
+  color: #000000; /* Стрелка черная в светлой теме */
+}
+
+.app.dark .task-arrow {
+  color: #ffffff; /* Стрелка белая в темной теме */
+}
+
+.task-arrow.open {
+  transform: rotate(180deg);
+}
+
+.task-details {
+  display: none;
+  padding-top: 10px;
+}
+
+.task-details.open {
+  display: block;
+  animation: slideDown 0.3s ease-out;
+}
+
+.task-description, .task-deadline {
+  margin: 5px 0;
   font-size: 0.95rem;
-  color: #6b7280;
-  margin-bottom: 12px;
-  line-height: 1.5;
+}
+
+.app.light .task-description,
+.app.light .task-deadline {
+  color: #000000; /* Описание и срок черные в светлой теме */
 }
 
 .app.dark .task-description,
 .app.dark .task-deadline {
-  color: #d1d5db;
+  color: #ffffff; /* Описание и срок белые в темной теме */
 }
 
 .task-status {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .status-select {
-  padding: 10px;
+  padding: 8px 15px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background: #f9fafb;
-  color: #1f2937;
-  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.app.light .status-select {
+  color: #000000; /* Статус черный в светлой теме */
 }
 
 .app.dark .status-select {
-  background: #4b5563;
-  border-color: #6b7280;
-  color: #ffffff;
+  color: #ffffff; /* Статус белый в темной теме */
 }
 
-.status-select:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+.status-select:hover, .status-select:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #63b3ed;
 }
 
-.task-buttons,
-.edit-buttons {
+.task-buttons {
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap; /* Для маленьких экранов */
 }
 
-.task-button,
-.edit-button {
-  flex: 1;
-  padding: 12px;
-  border-radius: 8px;
+.task-button {
+  padding: 8px 16px;
   border: none;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 500;
   transition: all 0.3s ease;
+  color: #ffffff; /* Текст кнопок всегда белый */
 }
 
-.task-button.edit,
-.edit-button.save {
-  background: #eab308;
-  color: #ffffff;
+.task-button.edit {
+  background: linear-gradient(90deg, #4299e1, #3182ce);
 }
 
-.app.dark .task-button.edit,
-.app.dark .edit-button.save {
-  background: #f59e0b;
-}
-
-.task-button.edit:hover,
-.edit-button.save:hover {
-  background: #ca8a04;
-  transform: scale(1.05);
+.task-button.edit:hover {
+  background: linear-gradient(90deg, #2b6cb0, #3182ce);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
 }
 
 .task-button.delete {
-  background: #dc2626;
-  color: #ffffff;
-}
-
-.app.dark .task-button.delete {
-  background: #ef4444;
+  background: linear-gradient(90deg, #e53e3e, #c53030);
 }
 
 .task-button.delete:hover {
-  background: #b91c1c;
-  transform: scale(1.05);
+  background: linear-gradient(90deg, #c53030, #9b2c2c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap; /* Для маленьких экранов */
+}
+
+.edit-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  color: #ffffff; /* Текст кнопок редактирования всегда белый */
+}
+
+.edit-button.save {
+  background: linear-gradient(90deg, #48bb78, #38a169);
+}
+
+.edit-button.save:hover {
+  background: linear-gradient(90deg, #38a169, #2f855a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
 }
 
 .edit-button.cancel {
-  background: #6b7280;
-  color: #ffffff;
-}
-
-.app.dark .edit-button.cancel {
-  background: #9ca3af;
+  background: linear-gradient(90deg, #e53e3e, #c53030);
 }
 
 .edit-button.cancel:hover {
-  background: #4b5563;
-  transform: scale(1.05);
+  background: linear-gradient(90deg, #c53030, #9b2c2c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
 }
 
-/* Адаптивдүүлүк */
-@media (max-width: 600px) {
+.no-tasks {
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.app.light .no-tasks {
+  color: #000000; /* "Нет задач" черный в светлой теме */
+}
+
+.app.dark .no-tasks {
+  color: #ffffff; /* "Нет задач" белый в темной теме */
+}
+
+.error-boundary {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.app.light .error-boundary {
+  color: #e53e3e; /* Ошибка в светлой теме */
+}
+
+.app.dark .error-boundary {
+  color: #fc8181; /* Ошибка в темной теме */
+}
+
+/* Анимация для раскрытия деталей */
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 200px;
+    opacity: 1;
+  }
+}
+
+/* Адаптивный дизайн для телефонов (320px и выше) */
+@media (max-width: 480px) {
+  .app {
+    padding: 10px 5px;
+  }
+
   .container {
-    padding: 20px 15px;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0 5px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .theme-toggle {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .task-form {
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .form-input, .form-textarea, .form-button {
+    width: calc(100% - 20px);
+    margin: 0 10px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .form-textarea {
+    min-height: 80px;
+  }
+
+  .form-button {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .filter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .filter-label {
+    font-size: 0.9rem;
+  }
+
+  .filter-select {
+    width: calc(100% - 20px);
+    margin: 0 10px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .task-list {
+    gap: 10px;
+  }
+
+  .task-item {
+    padding: 12px 15px;
+    border-radius: 8px;
+  }
+
+  .task-title {
+    font-size: 1rem;
+  }
+
+  .task-arrow {
+    font-size: 1rem;
+  }
+
+  .task-details {
+    padding-top: 8px;
+  }
+
+  .task-description, .task-deadline {
+    font-size: 0.85rem;
+  }
+
+  .status-select {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .task-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .task-button {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .edit-form {
+    gap: 10px;
+  }
+
+  .edit-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .edit-button {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .no-tasks {
+    font-size: 0.95rem;
+    padding: 15px;
+  }
+
+  .error-boundary {
+    padding: 20px;
+    font-size: 1rem;
+  }
+}
+
+/* Промежуточные экраны (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .app {
+    padding: 15px 8px;
+  }
+
+  .container {
+    padding: 15px;
+    border-radius: 10px;
+    margin: 0 8px;
+  }
+
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .theme-toggle {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    width: auto;
+  }
+
+  .form-input, .form-textarea, .form-button {
+    width: calc(100% - 30px);
+    margin: 0 15px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+
+  .form-textarea {
+    min-height: 90px;
+  }
+
+  .filter {
+    flex-direction: row;
+  }
+
+  .filter-select {
+    width: auto;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+  }
+
+  .task-item {
+    padding: 15px 18px;
+  }
+
+  .task-title {
+    font-size: 1.1rem;
+  }
+
+  .task-description, .task-deadline {
+    font-size: 0.9rem;
+  }
+
+  .task-button, .edit-button {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    width: auto;
+  }
+}
+
+/* Планшет и больше (768px - 899px) */
+@media (min-width: 768px) and (max-width: 899px) {
+  .container {
+    padding: 20px;
   }
 
   .title {
     font-size: 2rem;
   }
 
-  .theme-toggle {
-    padding: 10px 16px;
-    font-size: 0.9rem;
+  .form-input, .form-textarea, .form-button {
+    width: calc(100% - 40px);
+    margin: 0 20px;
+    padding: 12px 16px;
+    font-size: 1rem;
   }
 
-  .task-form,
+  .task-item {
+    padding: 18px;
+  }
+
+  .task-title {
+    font-size: 1.15rem;
+  }
+}
+
+/* Десктоп (900px и выше) */
+@media (min-width: 900px) {
+  .container {
+    padding: 30px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .form-input, .form-textarea, .form-button {
+    width: calc(100% - 40px);
+    margin: 0 20px;
+    padding: 14px 18px;
+    font-size: 1.1rem;
+  }
+
   .task-item {
     padding: 20px;
   }
 
-  .form-input,
-  .form-textarea,
-  .form-button,
-  .status-select,
-  .task-button,
-  .edit-button {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-
-  .filter-label {
-    font-size: 1rem;
-  }
-
-  .filter-select {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-
   .task-title {
     font-size: 1.2rem;
-  }
-
-  .task-description,
-  .task-deadline {
-    font-size: 0.85rem;
-  }
-
-  .no-tasks {
-    font-size: 1.1rem;
   }
 }
